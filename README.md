@@ -96,15 +96,15 @@ Sub stockbest()
         Dim data_2r As Range
         Set data_2r = Range("K1:K3001")
         
-        'TV = Application.WorksheetFunction.max(data_r)
-        '         TV = ws.Cells(4, 17).Value        '[Printing the Total Volume on table]
-        '         ws.Cells(i, 9).Value = ws.Cells(4, 16).Value   '[Printing the corresponding tickers name]
-        'maxi = Application.WorksheetFunction.max(data_2r)
-        '     max = ws.Cells(2, 17).Value
-        '     ws.Cells(i, 9).Value = Cells(2, 16).Value
-        'mini = Application.WorksheetFunction.min(data_2r)
-        '     min = ws.Cells(3, 17).Value
-        '     ws.Cells(i, 9).Value = Cells(3, 16).Value
+        TV = Application.WorksheetFunction.max(data_r)
+            TV = ws.Cells(4, 17).Value        '[Printing the Total Volume on table]
+            ws.Cells(i, 9).Value = ws.Cells(4, 16).Value   '[Printing the corresponding tickers name]
+        maxi = Application.WorksheetFunction.max(data_2r)
+             max = ws.Cells(2, 17).Value
+             ws.Cells(i, 9).Value = Cells(2, 16).Value
+        mini = Application.WorksheetFunction.min(data_2r)
+             min = ws.Cells(3, 17).Value
+             ws.Cells(i, 9).Value = Cells(3, 16).Value
              
        
         
