@@ -1,0 +1,113 @@
+#VBA SCRIPT for MULTIPLE STOCK
+
+Sub stockbest()
+    For Each ws In Worksheets '[Running loop in all worksheets]
+        WorksheetName = ws.Name
+        finalrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+        
+        '[Declaring all necessary variables]
+        Dim stock_name As String
+        Dim stock_tot As Double
+        stock_tot = 0
+        Dim row_num As Integer
+        row_num = 2
+        
+        ' [Labeling The New Columns]
+        ws.Range("I1").Value = "Ticker"
+        ws.Range("J1").Value = "Yearly Change"
+        ws.Range("K1").Value = "Percent Change"
+        ws.Range("L1").Value = "Total Stock Volume"
+        
+        For i = 2 To finalrow
+            '[Ticker and Total Stock Volume]
+            If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+                stock_name = ws.Cells(i, 1).Value 
+                ws.Range("I" & row_num).Value = stock_name
+                stock_tot = stock_tot + ws.Cells(i, 7).Value
+                ws.Range("L" & row_num).Value = stock_tot 
+                row_num = row_num + 1
+                stock_tot = 0 
+            Else
+                stock_tot = stock_tot + ws.Cells(i, 7).Value 
+            End If
+        Next i
+        
+'===============
+' [Yearly Change and Percentage Form]
+
+      
+        Dim open_v As Single
+        Dim closing_v As Single
+        Dim yearly_c As Single
+        Dim row_nu As Integer
+        row_nu = 2
+        
+        For i = 2 To finalrow
+            If ws.Cells(i, 2).Value = (ws.Name + "0102") Then  
+                open_v = ws.Cells(i, 3).Value
+            ElseIf ws.Cells(i, 2).Value = (ws.Name + "1231") Then
+                closing_v = ws.Cells(i, 6).Value
+                yearly_c = closing_v - open_v  
+                ws.Cells(row_nu, 10).Value = yearly_c
+                ws.Cells(row_nu, 10).NumberFormat = "#,##0.00"   
+                
+                If open_v <> 0 Then
+                    ws.Cells(row_nu, 11).Value = yearly_c / open_v
+                    ws.Cells(row_nu, 11).NumberFormat = "0.00%"  
+                Else
+                    ws.Cells(row_nu, 11).Value = 0
+                    ws.Cells(row_nu, 11).NumberFormat = "0.00%"
+                End If
+                row_nu = row_nu + 1 
+            End If
+        Next i
+        
+'================
+
+        '[Cell formatting]
+                Dim cell As Range
+                For Each cell In Range("J2:J3001")
+                    If cell.Value > 0 Then
+                    cell.Interior.Color = RGB(0, 255, 0) ' [Green]
+                     Else: cell.Interior.Color = RGB(255, 0, 0) '[Red]
+                     End If
+                Next cell
+                
+                
+'==============
+
+        '[Functionality Segment]
+
+        ws.Range("O2").Value = "Greatest % Increase"
+        ws.Range("O3").Value = "Greatest % Decrease"
+        ws.Range("O4").Value = "Greatest Total Volume"
+
+        ws.Range("P1").Value = "Ticker"
+        ws.Range("Q1").Value = "Value"
+        
+  
+        
+        Dim TV As Double '[TV = Total Volume]
+        Dim maxi As Double 
+        Dim mini As Double 
+        Dim data_r As Range
+        Set data_r = Range("L1:L3001")
+        Dim data_2r As Range
+        Set data_2r = Range("K1:K3001")
+        
+        'TV = Application.WorksheetFunction.max(data_r)
+             'TV = ws.Cells(4, 17).Value       
+             'ws.Cells(i, 9).Value = ws.Cells(4, 16).Value   
+        'maxi = Application.WorksheetFunction.max(data_2r)
+             'max = ws.Cells(2, 17).Value
+             'ws.Cells(i, 9).Value = Cells(2, 16).Value
+        'mini = Application.WorksheetFunction.min(data_2r)
+             'min = ws.Cells(3, 17).Value
+             'ws.Cells(i, 9).Value = Cells(3, 16).Value
+             
+       
+        
+        
+        
+    Next ws
+End Sub
